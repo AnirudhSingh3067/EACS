@@ -1,0 +1,119 @@
+[
+  {
+    "patientId": "test-patient-123",
+    "professionalId": "test-prof-456",
+    "startTime": "2026-03-01T14:18:14.020Z",
+    "endTime": "2026-03-01T15:18:14.021Z",
+    "status": "ongoing",
+    "id": "83174a7c-9f75-45e0-88b6-653662e0b9be",
+    "createdAt": "2026-03-01T13:18:16.511Z"
+  },
+  {
+    "patientId": "fgbO1e9ft5PZn7bZqX6IqjRfGsB2",
+    "professionalId": "1",
+    "startTime": "2026-03-01T13:35:34.122Z",
+    "endTime": "2026-03-01T14:35:34.122Z",
+    "status": "ongoing",
+    "id": "c2ef57d6-9b1b-4ba9-a02d-b393e0aa29e8",
+    "createdAt": "2026-03-01T13:36:00.128Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "1",
+    "startTime": "2026-03-01T13:38:05.305Z",
+    "endTime": "2026-03-01T14:38:05.305Z",
+    "status": "ongoing",
+    "id": "80abe12a-97ec-46bd-8bfe-a591ba696203",
+    "createdAt": "2026-03-01T13:38:07.826Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "2",
+    "startTime": "2026-03-03T18:30:00.000Z",
+    "endTime": "2026-03-03T19:30:00.000Z",
+    "status": "ongoing",
+    "id": "24a6cfad-74ba-428f-9bb3-7580489efcd4",
+    "createdAt": "2026-03-01T13:38:18.171Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "1",
+    "startTime": "2026-03-02T18:30:00.000Z",
+    "endTime": "2026-03-02T19:30:00.000Z",
+    "status": "ongoing",
+    "id": "0ace8632-67c2-4df3-a8f7-4021bb9fc495",
+    "createdAt": "2026-03-01T13:38:31.595Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "2",
+    "startTime": "2026-03-01T03:30:00.000Z",
+    "endTime": "2026-03-01T04:30:00.000Z",
+    "status": "ongoing",
+    "id": "5e856f28-13c0-4777-966c-51a33979464a",
+    "createdAt": "2026-03-01T13:42:07.342Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "2",
+    "startTime": "2026-03-02T03:30:00.000Z",
+    "endTime": "2026-03-02T04:30:00.000Z",
+    "status": "ongoing",
+    "id": "f8efdf9a-3586-48be-b74d-dfd8048ebfd5",
+    "createdAt": "2026-03-01T13:45:27.683Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "1",
+    "startTime": "2026-03-31T08:30:00.000Z",
+    "endTime": "2026-03-31T09:30:00.000Z",
+    "status": "ongoing",
+    "id": "6058a11f-d36b-4d21-99d1-5beb148a5c39",
+    "createdAt": "2026-03-01T13:45:46.664Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "1",
+    "startTime": "2026-03-26T08:30:00.000Z",
+    "endTime": "2026-03-26T09:30:00.000Z",
+    "status": "ongoing",
+    "id": "c67c8fe2-09c2-4b36-a6ba-1e6d25f5be96",
+    "createdAt": "2026-03-01T13:46:05.305Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "2",
+    "startTime": "2026-03-01T05:30:00.000Z",
+    "endTime": "2026-03-01T06:30:00.000Z",
+    "status": "ongoing",
+    "id": "ccdc1821-727b-4d7b-8b8f-c9e407c97ced",
+    "createdAt": "2026-03-01T13:51:26.444Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "2",
+    "startTime": "2026-03-18T03:30:00.000Z",
+    "endTime": "2026-03-18T04:30:00.000Z",
+    "status": "ongoing",
+    "id": "e6d78f46-0e30-4bce-825b-9ff2a308f6f5",
+    "createdAt": "2026-03-01T13:58:50.508Z"
+  },
+  {
+    "patientId": "hPvZrDbdL4OVFFifIeyJZNNGeBJ3",
+    "professionalId": "1",
+    "startTime": "2026-03-02T04:30:00.000Z",
+    "endTime": "2026-03-02T05:30:00.000Z",
+    "status": "ongoing",
+    "id": "28e6483a-ed3a-4bcc-9874-b67a739a09e8",
+    "createdAt": "2026-03-01T14:00:26.075Z"
+  },
+  {
+    "patientId": "Ci1YkKY538QVfn6X7OjS6wIIktm1",
+    "practitionerId": "1",
+    "startTime": "2026-03-04T04:30:00.000Z",
+    "status": "upcoming",
+    "meetingLink": "",
+    "id": "ea756a4f-3bb6-4448-b935-ac12cf46deb2",
+    "createdAt": "2026-03-01T14:30:25.245Z"
+  }
+]

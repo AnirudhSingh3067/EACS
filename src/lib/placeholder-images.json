@@ -1,0 +1,40 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Professional consultation in a warm, natural office",
+      "imageUrl": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdXBwb3J0fGVufDB8fHx8MTc3MjI3MTAyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "therapy session"
+    },
+    {
+      "id": "psychologist-1",
+      "description": "Dr. Sarah Jenkins - Professional portrait",
+      "imageUrl": "https://images.unsplash.com/photo-1592947945242-69312358628b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwc3ljaG9sb2dpc3R8ZW58MHx8fHwxNzcyMjcwNjMzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional headshot"
+    },
+    {
+      "id": "psychologist-2",
+      "description": "Michael Chen - Warm counselor portrait",
+      "imageUrl": "https://images.unsplash.com/photo-1714976694810-85add1a29c96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0aGVyYXBpc3R8ZW58MHx8fHwxNzcyMjcwNjg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional headshot"
+    },
+    {
+      "id": "psychologist-3",
+      "description": "Dr. Elena Rodriguez - Friendly expert portrait",
+      "imageUrl": "https://images.unsplash.com/photo-1589386417686-0d34b5903d23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBtZW58ZW58MHx8fHwxNzcyMjcwODc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional headshot"
+    },
+    {
+      "id": "about-us",
+      "description": "A calm and peaceful therapeutic environment",
+      "imageUrl": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBvZmZpY2V8ZW58MHx8fHwxNzcyMDg0NDE1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern office"
+    },
+    {
+      "id": "mental-wellness",
+      "description": "Abstract concept of mental peace",
+      "imageUrl": "https://images.unsplash.com/photo-1666362755385-1856fca1a330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxQc3ljaG9sb2d5JTIwfGVufDB8fHx8MTc3MjI3MDUwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "serene nature"
+    }
+  ]
+}
