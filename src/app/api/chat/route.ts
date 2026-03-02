@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const client = new OpenAI({
     apiKey: process.env.XAI_API_KEY,
-    baseURL: "https://api.groq.com/openai/v1",
+    baseURL: "https://api.x.ai/v1",
 });
 
 export async function POST(req: Request) {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         }
 
         const response = await client.chat.completions.create({
-            model: "moonshotai/kimi-k2-instruct",
+            model: "grok-beta",
             messages: [
                 { role: "system", content: "You are a calm and supportive mental health assistant." },
                 { role: "user", content: message }

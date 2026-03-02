@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -20,9 +21,14 @@ import {
   ArrowRight,
   Smile,
   CheckCircle2,
-  Zap
+  Zap,
+  X,
+  Calendar,
+  Clock,
+  Video
 } from "lucide-react";
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
+import { AnimatePresence, motion } from "framer-motion";
 import { AIChatDrawer } from "@/components/chat/ai-chat-drawer";
 import { useUser, useDoc, useFirestore, useCollection } from "@/firebase";
 import { doc, collection, serverTimestamp, query, where, orderBy, limit } from "firebase/firestore";
@@ -32,7 +38,6 @@ import { toast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { addDocumentNonBlocking, updateDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { cn } from "@/lib/utils";
-import { PatientHistoryPanel } from "@/components/PatientHistoryPanel";
 
 const MOODS = [
   { label: "Happy", icon: "😊", color: "#FBBF24", desc: "Feeling sunny!", score: 5 },
@@ -51,6 +56,7 @@ const ACHIEVEMENTS = [
 
 export default function UserDashboard() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [moodNote, setMoodNote] = useState("");
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -133,6 +139,29 @@ export default function UserDashboard() {
     toast({ title: "Privacy Switched", description: `You are now ${!profile.isAnonymous ? "incognito" : "back to yourself"}.` });
   };
 
+  // -----------------------------------------
+  // Fetch session history for the drawer
+  // -----------------------------------------
+  const sessionsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return query(
+      collection(db, "sessions"),
+      where("patientId", "==", user.uid),
+      orderBy("startTime", "asc")
+    );
+  }, [user?.uid, db]);
+
+  const { data: rawSessionsData, isLoading: isSessionsLoading } = useCollection(sessionsQuery);
+
+  const sessions = useMemo(() => {
+    if (!rawSessionsData || !Array.isArray(rawSessionsData)) return [];
+
+    const upcoming = rawSessionsData.filter((s: any) => s.status === "upcoming");
+    const past = rawSessionsData.filter((s: any) => s.status === "completed" || s.status === "cancelled");
+
+    return [...upcoming, ...past];
+  }, [rawSessionsData]);
+
   if (isUserLoading || isProfileLoading || !isMounted) {
     return (
       <div className="flex h-screen items-center justify-center bg-background">
@@ -146,15 +175,26 @@ export default function UserDashboard() {
 
   const displayName = profile?.isAnonymous ? (profile?.nickname || "Anonymous Friend") : (profile?.name || user?.displayName || "Friend");
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "upcoming":
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800";
+      case "completed":
+        return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800";
+      case "cancelled":
+        return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800";
+      default:
+        return "bg-muted text-muted-foreground";
+    }
+  };
+
   return (
     <div className="flex min-h-screen">
-      <PatientHistoryPanel />
-
       <div className="flex-1 bg-background py-10 w-full overflow-x-hidden">
         <div className="container mx-auto px-4 max-w-6xl space-y-10">
 
           {/* Profile Header Section */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-4 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-4">
             <div className="flex items-center gap-6">
               <div className="relative group">
                 <Avatar className="h-20 w-20 border-4 border-background shadow-xl transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110">
@@ -178,6 +218,10 @@ export default function UserDashboard() {
               </div>
             </div>
             <div className="flex gap-3">
+              <Button variant="outline" className="bg-card rounded-2xl shadow-sm border-border" onClick={() => setHistoryOpen(true)}>
+                <History className="h-4 w-4 mr-2" />
+                Session History
+              </Button>
               <Button variant="outline" className="bg-card rounded-2xl shadow-sm border-border" onClick={toggleAnonymous}>
                 {profile?.isAnonymous ? <Eye className="h-4 w-4 mr-2" /> : <EyeOff className="h-4 w-4 mr-2" />}
                 {profile?.isAnonymous ? "Reveal Me" : "Go Incognito"}
@@ -191,7 +235,7 @@ export default function UserDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             {/* Daily Mood Tracker */}
-            <div className="lg:col-span-1 space-y-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+            <div className="lg:col-span-1 space-y-8">
               <Card className="friendly-card overflow-hidden">
                 <CardHeader className="pb-0">
                   <CardTitle className="text-xl font-bold font-headline flex items-center gap-2">
@@ -256,27 +300,31 @@ export default function UserDashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {ACHIEVEMENTS.map((ach, idx) => (
-                    <div
-                      key={ach.id}
-                      className="flex items-center gap-4 p-3 rounded-2xl bg-muted/30 group hover:bg-card hover:shadow-sm transition-all duration-300"
-                      style={{ transitionDelay: `${idx * 50}ms` }}
-                    >
-                      <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-12", ach.color)}>
-                        {ach.icon}
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-foreground">{ach.title}</p>
-                        <p className="text-[10px] text-muted-foreground">{ach.desc}</p>
-                      </div>
-                    </div>
-                  ))}
+                  <AnimatePresence>
+                    {ACHIEVEMENTS.map((ach, idx) => (
+                      <motion.div
+                        key={ach.id}
+                        initial={{ opacity: 0, y: 16, scale: 0.995 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.3, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex items-center gap-4 p-3 rounded-2xl bg-muted/30 group hover:bg-card hover:shadow-sm transition-all duration-300"
+                      >
+                        <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-12", ach.color)}>
+                          {ach.icon}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-foreground">{ach.title}</p>
+                          <p className="text-[10px] text-muted-foreground">{ach.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </CardContent>
               </Card>
             </div>
 
             {/* Analytics and Insights */}
-            <div className="lg:col-span-2 space-y-8 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+            <div className="lg:col-span-2 space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Weekly Reflection Upgrade */}
                 <Card className="friendly-card col-span-1 md:col-span-2">
@@ -372,24 +420,28 @@ export default function UserDashboard() {
                       {moodLogs && moodLogs.length > 0 ? (
                         <div className="space-y-4">
                           <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Recent Reflections</p>
-                          {moodLogs.slice(0, 3).map((log, idx) => (
-                            <div
-                              key={log.id}
-                              className="flex items-center justify-between p-4 bg-muted/30 rounded-[1.5rem] group hover:bg-card hover:shadow-md transition-all duration-300"
-                              style={{ transitionDelay: `${idx * 100}ms` }}
-                            >
-                              <div className="flex items-center gap-4">
-                                <span className="text-2xl transition-transform group-hover:scale-125">{MOODS.find(m => m.label === log.mood)?.icon}</span>
-                                <div>
-                                  <p className="font-bold text-sm text-foreground">{log.mood}</p>
-                                  <p className="text-[10px] text-muted-foreground">
-                                    {log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now'}
-                                  </p>
+                          <AnimatePresence>
+                            {moodLogs.slice(0, 3).map((log, idx) => (
+                              <motion.div
+                                key={log.id}
+                                initial={{ opacity: 0, y: 16, scale: 0.995 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                transition={{ duration: 0.3, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                className="flex items-center justify-between p-4 bg-muted/30 rounded-[1.5rem] group hover:bg-card hover:shadow-md transition-all duration-300"
+                              >
+                                <div className="flex items-center gap-4">
+                                  <span className="text-2xl transition-transform group-hover:scale-125">{MOODS.find(m => m.label === log.mood)?.icon}</span>
+                                  <div>
+                                    <p className="font-bold text-sm text-foreground">{log.mood}</p>
+                                    <p className="text-[10px] text-muted-foreground">
+                                      {log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now'}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                            </div>
-                          ))}
+                                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                              </motion.div>
+                            ))}
+                          </AnimatePresence>
                         </div>
                       ) : (
                         <div className="text-center py-10 space-y-4">
@@ -408,6 +460,101 @@ export default function UserDashboard() {
         </div>
 
         <AIChatDrawer open={isChatOpen} onOpenChange={setIsChatOpen} />
+
+        {/* Drawer Overlay */}
+        {historyOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 z-40 transition-opacity"
+            onClick={() => setHistoryOpen(false)}
+          />
+        )}
+
+        {/* Slide-in Drawer */}
+        <div
+          className={cn(
+            "fixed inset-y-0 right-0 w-full md:w-[400px] bg-background dark:bg-gray-900 shadow-2xl z-50 overflow-y-auto transform transition-all duration-[250ms] ease-out",
+            historyOpen ? "translate-y-0 opacity-100 scale-100 pointer-events-auto" : "translate-y-[24px] opacity-0 scale-[0.98] pointer-events-none"
+          )}
+        >
+          <div className="flex items-center justify-between p-6 border-b border-border sticky top-0 bg-background/95 backdrop-blur z-10">
+            <h2 className="font-headline font-bold text-xl">Session History</h2>
+            <Button variant="ghost" size="icon" onClick={() => setHistoryOpen(false)}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          <div className="p-6">
+            {isSessionsLoading ? (
+              <div className="space-y-4 mt-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-28 rounded-2xl shimmer shadow-sm opacity-50 border border-border" />
+                ))}
+              </div>
+            ) : sessions.length === 0 ? (
+              <div className="flex flex-col items-center justify-center text-center py-20 bg-muted/20 rounded-3xl border border-dashed border-border mt-4">
+                <Calendar className="h-10 w-10 text-muted-foreground/40 mb-3" />
+                <p className="text-sm text-muted-foreground font-medium">No sessions found.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {sessions.map((session: any) => {
+                  const startDate = session.startTime?.toDate ? session.startTime.toDate() : new Date();
+                  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+
+                  return (
+                    <div
+                      key={session.id}
+                      className="bg-card rounded-2xl p-5 border border-border shadow-sm relative overflow-hidden flex flex-col gap-3 group hover:border-primary/50 transition-colors"
+                    >
+                      <div className={cn("absolute top-0 left-0 w-1 h-full", session.status === 'upcoming' ? 'bg-blue-500' : session.status === 'cancelled' ? 'bg-red-500' : 'bg-emerald-500')} />
+
+                      <div className="flex justify-between items-start ml-2 text-sm">
+                        <span className={cn("text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border", getStatusColor(session.status))}>
+                          {session.status}
+                        </span>
+                      </div>
+
+                      <div className="space-y-3 ml-2 mt-1">
+                        <div className="flex items-center text-foreground font-medium text-sm">
+                          <UserIcon className="h-4 w-4 mr-2 text-primary" />
+                          <span>{session.practitionerName || `Practitioner: ${session.practitionerId.substring(0, 6)}...`}</span>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-4 mt-1">
+                          <div className="space-y-2">
+                            <div className="flex items-center text-muted-foreground text-xs">
+                              <Calendar className="h-3.5 w-3.5 mr-2" />
+                              <span>{format(startDate, "MMM d, yyyy")}</span>
+                            </div>
+
+                            <div className="flex items-center text-muted-foreground text-xs">
+                              <Clock className="h-3.5 w-3.5 mr-2" />
+                              <span>
+                                {format(startDate, "h:mm a")} - {format(endDate, "h:mm a")}
+                              </span>
+                            </div>
+                          </div>
+
+                          {session.meetingLink && (
+                            <a
+                              href={session.meetingLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center whitespace-nowrap text-xs font-semibold transition-colors focus-visible:outline-none h-8 px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow-sm"
+                            >
+                              <Video className="h-3.5 w-3.5 mr-1.5" /> Join Meeting
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
   );

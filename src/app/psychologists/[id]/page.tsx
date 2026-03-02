@@ -22,7 +22,8 @@ import {
   Video,
   Sparkles,
   ArrowRight,
-  AlertCircle
+  AlertCircle,
+  CheckCircle2
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -42,7 +43,7 @@ export default function ProfilePage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [meetingLink, setMeetingLink] = useState("");
-  const [isBooking, setIsBooking] = useState(false);
+  const [bookingState, setBookingState] = useState<"idle" | "loading" | "success">("idle");
 
   const psychologist = MOCK_PSYCHOLOGISTS.find(p => p.id === id);
 
@@ -64,7 +65,7 @@ export default function ProfilePage() {
       toast({ title: "Time Required", description: "Please pick a time for your session." });
       return;
     }
-    setIsBooking(true);
+    setBookingState("loading");
 
     // Combine selected date and time
     const [_, timeVal, period] = selectedTime.split(" ");
@@ -90,6 +91,8 @@ export default function ProfilePage() {
         window.dispatchEvent(new Event("session-booked"));
       }
 
+      setBookingState("success");
+
       toast({
         title: "Session Booked! ✨",
         description: `Your healing journey with ${psychologist.name} starts on ${date.toLocaleDateString()}.`,
@@ -97,15 +100,14 @@ export default function ProfilePage() {
 
       setTimeout(() => {
         router.push("/dashboard/user");
-      }, 1500);
+      }, 1000);
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to book your session. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setIsBooking(false);
+      setBookingState("idle");
     }
   };
 
@@ -292,12 +294,16 @@ export default function ProfilePage() {
 
                   <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <Button
-                      className="w-full h-16 text-lg font-bold bg-primary hover:bg-primary/90 rounded-[1.5rem] cta-glow btn-bounce group text-primary-foreground"
+                      className={`w-full h-16 text-lg font-bold rounded-[1.5rem] cta-glow btn-bounce group text-white transition-all duration-300 ${bookingState === "success" ? "bg-emerald-500 hover:bg-emerald-600 scale-100" : "bg-primary hover:bg-primary/90"}`}
                       onClick={handleBooking}
-                      disabled={isBooking}
+                      disabled={bookingState !== "idle"}
                     >
-                      {isBooking ? (
+                      {bookingState === "loading" ? (
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      ) : bookingState === "success" ? (
+                        <span className="flex items-center gap-2 animate-in zoom-in duration-300">
+                          <CheckCircle2 className="h-6 w-6" /> Booked Successfully
+                        </span>
                       ) : (
                         <span className="flex items-center gap-2">
                           Book Session <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />

@@ -90,7 +90,7 @@ export default function SignupPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
-            
+
             <div className="space-y-3 py-2">
               <Label>Register as:</Label>
               <RadioGroup value={role} onValueChange={setRole} className="flex gap-4">

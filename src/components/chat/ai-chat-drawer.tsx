@@ -136,7 +136,7 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
           <ScrollArea className="flex-1 px-8 py-10 bg-muted/20" ref={scrollRef}>
             <div className="space-y-8 pb-10">
               {messages.map((m, i) => (
-                <div key={i} className={cn("flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500", m.role === "user" ? "flex-row-reverse" : "")}>
+                <div key={i} className={cn("flex gap-4 animate-section-flow", m.role === "user" ? "flex-row-reverse" : "")}>
                   <div className={cn(
                     "h-11 w-11 rounded-[1.2rem] flex items-center justify-center shrink-0 shadow-md transition-transform hover:scale-110",
                     m.role === "user" ? "bg-card border-2 border-border" : "bg-primary text-primary-foreground"
@@ -164,7 +164,7 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
                 </div>
               )}
               {messages.length === 1 && !isLoading && (
-                <div className="grid grid-cols-1 gap-2 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="grid grid-cols-1 gap-2 pt-4 animate-section-flow">
                   <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2 ml-1">Quick Actions:</p>
                   {QUICK_ACTIONS.map((action) => (
                     <Button

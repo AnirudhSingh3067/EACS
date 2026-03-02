@@ -47,12 +47,12 @@ export function Navbar() {
   const notificationsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return query(
-      collection(db, "notifications"), 
-      where("userId", "==", user.uid), 
+      collection(db, "notifications"),
+      where("userId", "==", user.uid),
       limit(10)
     );
   }, [db, user?.uid]);
-  
+
   const { data: notifications } = useCollection(notificationsQuery);
 
   const handleLogout = async () => {
@@ -78,7 +78,7 @@ export function Navbar() {
       <div className="container mx-auto flex h-18 items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="h-10 w-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
+            <div className="h-10 w-10 bg-primary rounded-xl flex items-center justify-center text-white logo-aura">
               <BrainCircuit className="h-6 w-6" />
             </div>
             <span className="text-2xl font-headline font-bold text-foreground tracking-tight">MindBridge</span>

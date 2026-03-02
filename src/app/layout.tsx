@@ -1,9 +1,11 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+
+import { TransitionProvider } from '@/components/layout/transition-provider';
 
 export const metadata: Metadata = {
   title: 'MindBridge – AI-Assisted Human Psychological Support',
@@ -38,8 +40,10 @@ export default function RootLayout({
       <body className="font-body antialiased flex flex-col min-h-screen bg-background text-foreground transition-colors duration-300">
         <FirebaseClientProvider>
           <Navbar />
-          <main className="flex-grow">
-            {children}
+          <main className="flex-grow flex flex-col h-full items-center">
+            <TransitionProvider>
+              {children}
+            </TransitionProvider>
           </main>
           <Footer />
           <Toaster />

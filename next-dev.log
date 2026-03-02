@@ -1,0 +1,155 @@
+
+> nextn@0.1.0 dev
+> next dev --turbopack -p 9002
+
+   ▲ Next.js 15.5.9 (Turbopack)
+   - Local:        http://localhost:9002
+   - Network:      http://192.168.1.3:9002
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling /dashboard/user ...
+
+[1m[33mwarn[39m[22m - The class `duration-[250ms]` is ambiguous and matches multiple utilities.
+[1m[33mwarn[39m[22m - If this is content and not a class, replace it with `duration-&lsqb;250ms&rsqb;` to silence this warning.
+ ✓ Compiled /dashboard/user in 8.2s
+ ⨯ ./src/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\src\app\globals.css:76:5: The `shadow-[0_0_15px_rgba(var(--primary),` class does not exist. If `shadow-[0_0_15px_rgba(var(--primary),` is a custom class, make sure it is defined within a `@layer` directive.
+    [at Input.error (turbopack:///[project]/node_modules/postcss/lib/input.js:109:16)]
+    [at AtRule.error (turbopack:///[project]/node_modules/postcss/lib/node.js:145:32)]
+    [at processApply (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:380:29)]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:551:9]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\processTailwindFeatures.js:55:50]
+    [at async plugins (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\plugin.js:38:17)]
+    [at async LazyResult.runAsync (turbopack:///[project]/node_modules/postcss/lib/lazy-result.js:261:11)]
+    [at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34)]
+    [at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1866ms
+ GET /dashboard/user 500 in 10661ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 733ms
+ GET /favicon.ico 500 in 806ms
+ ⨯ ./src/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\src\app\globals.css:76:5: The `shadow-[0_0_15px_rgba(var(--primary),` class does not exist. If `shadow-[0_0_15px_rgba(var(--primary),` is a custom class, make sure it is defined within a `@layer` directive.
+    [at Input.error (turbopack:///[project]/node_modules/postcss/lib/input.js:109:16)]
+    [at AtRule.error (turbopack:///[project]/node_modules/postcss/lib/node.js:145:32)]
+    [at processApply (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:380:29)]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:551:9]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\processTailwindFeatures.js:55:50]
+    [at async plugins (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\plugin.js:38:17)]
+    [at async LazyResult.runAsync (turbopack:///[project]/node_modules/postcss/lib/lazy-result.js:261:11)]
+    [at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34)]
+    [at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+
+ GET /dashboard/user 500 in 321ms
+ GET /favicon.ico 500 in 221ms
+ ○ Compiling /dashboard/psychologist ...
+ ✓ Compiled /dashboard/psychologist in 2.6s
+ ⨯ ./src/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\src\app\globals.css:76:5: The `shadow-[0_0_15px_rgba(var(--primary),` class does not exist. If `shadow-[0_0_15px_rgba(var(--primary),` is a custom class, make sure it is defined within a `@layer` directive.
+    [at Input.error (turbopack:///[project]/node_modules/postcss/lib/input.js:109:16)]
+    [at AtRule.error (turbopack:///[project]/node_modules/postcss/lib/node.js:145:32)]
+    [at processApply (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:380:29)]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\lib\expandApplyAtRules.js:551:9]
+    [at D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\processTailwindFeatures.js:55:50]
+    [at async plugins (D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\node_modules\tailwindcss\lib\plugin.js:38:17)]
+    [at async LazyResult.runAsync (turbopack:///[project]/node_modules/postcss/lib/lazy-result.js:261:11)]
+    [at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34)]
+    [at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+
+ GET /dashboard/psychologist 500 in 2781ms
+ GET /favicon.ico 500 in 330ms
+ ○ Compiling / ...
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to C:\Users\ASUS\AppData\Local\Temp\next-panic-51089325c8ddff3b77eb80497dc109bb.log.
+
+To help make Turbopack better, report this error by ]8;;https://github.com/vercel/next.js/discussions/new?category=turbopack-error-report&title=Turbopack%20Error%3A%20%5Bproject%5D%2Fsrc%2Fapp%2Fglobals.css%20%5Bapp-client%5D%20%28css%29&body=Turbopack%20version%3A%20%6096f69990%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0A%5Bproject%5D%2Fsrc%2Fapp%2Fglobals.css%20%5Bapp-client%5D%20%28css%29%0A%0ACaused%20by%3A%0A-%20creating%20new%20process%0A-%20node%20process%20exited%20before%20we%20could%20connect%20to%20it%20with%20exit%20code%3A%201%0A%0ADebug%20info%3A%0A-%20Execution%20of%20subscribe_issues_and_diags_operation%20failed%0A-%20Execution%20of%20%3CAppEndpoint%20as%20Endpoint%3E%3A%3Aserver_changed%20failed%0A-%20Execution%20of%20%2AProject%3A%3Aserver_changed%20failed%0A-%20Execution%20of%20%2AAppEndpointOutput%3A%3Aserver_assets%20failed%0A-%20Execution%20of%20AppEndpoint%3A%3Aoutput%20failed%0A-%20Execution%20of%20AppProject%3A%3Aapp_module_graphs%20failed%0A-%20Execution%20of%20%2A%3CAppEndpoint%20as%20Endpoint%3E%3A%3Aadditional_entries%20failed%0A-%20Execution%20of%20%2AModuleGraph%3A%3Afrom_graphs%20failed%0A-%20Execution%20of%20SingleModuleGraph%3A%3Anew_with_entries_visited_intern%20failed%0A-%20%5Bproject%5D%2Fsrc%2Fapp%2Fglobals.css%20%5Bapp-client%5D%20%28css%29%0A-%20Execution%20of%20primary_chunkable_referenced_modules%20failed%0A-%20Execution%20of%20%3CCssModuleAsset%20as%20Module%3E%3A%3Areferences%20failed%0A-%20Execution%20of%20parse_css%20failed%0A-%20Execution%20of%20%3CPostCssTransformedAsset%20as%20Asset%3E%3A%3Acontent%20failed%0A-%20Execution%20of%20PostCssTransformedAsset%3A%3Aprocess%20failed%0A-%20creating%20new%20process%0A-%20node%20process%20exited%20before%20we%20could%20connect%20to%20it%20with%20exit%20code%3A%201%0A%20%20Process%20output%3A%0A%20%20%0A%20%20Process%20error%20output%3A%0A%20%20node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A1372%0A%20%20%20%20throw%20err%3B%0A%20%20%20%20%5E%0A%20%20%0A%20%20Error%3A%20Cannot%20find%20module%20%27D%3A%5CZother%5CClg%20files%5CNew%20folder%5Chttps---github.com-AnirudhSingh3067-EACS-main%5C.next%5Cpostcss.js%27%0A%20%20%20%20%20%20at%20Module._resolveFilename%20%28node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A1369%3A15%29%0A%20%20%20%20%20%20at%20defaultResolveImpl%20%28node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A1025%3A19%29%0A%20%20%20%20%20%20at%20resolveForCJSWithHooks%20%28node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A1030%3A22%29%0A%20%20%20%20%20%20at%20Module._load%20%28node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A1179%3A37%29%0A%20%20%20%20%20%20at%20TracingChannel.traceSync%20%28node%3Adiagnostics_channel%3A322%3A14%29%0A%20%20%20%20%20%20at%20wrapModuleLoad%20%28node%3Ainternal%2Fmodules%2Fcjs%2Floader%3A235%3A24%29%0A%20%20%20%20%20%20at%20Module.executeUserEntryPoint%20%5Bas%20runMain%5D%20%28node%3Ainternal%2Fmodules%2Frun_main%3A152%3A5%29%0A%20%20%20%20%20%20at%20node%3Ainternal%2Fmain%2Frun_main_module%3A33%3A47%20%7B%0A%20%20%20%20code%3A%20%27MODULE_NOT_FOUND%27%2C%0A%20%20%7D%0A%20%20%0A%20%20Node.js%20v24.4.1%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace\clicking here.]8;;\
+-----
+
+ ✓ Compiled / in 41.5s
+Error [TurbopackInternalError]: Failed to write app endpoint /page
+
+Caused by:
+- [project]/src/app/globals.css [app-client] (css)
+- creating new process
+- node process exited before we could connect to it with exit code: 1
+
+Debug info:
+- Execution of TaskId { id: 2147483723 } transient failed
+- Execution of get_written_endpoint_with_issues_operation failed
+- Execution of endpoint_write_to_disk failed
+- Execution of <AppEndpoint as Endpoint>::output failed
+- Failed to write app endpoint /page
+- Execution of AppEndpoint::output failed
+- Execution of AppProject::app_module_graphs failed
+- Execution of *<AppEndpoint as Endpoint>::additional_entries failed
+- Execution of *ModuleGraph::from_graphs failed
+- Execution of SingleModuleGraph::new_with_entries_visited_intern failed
+- [project]/src/app/globals.css [app-client] (css)
+- Execution of primary_chunkable_referenced_modules failed
+- Execution of <CssModuleAsset as Module>::references failed
+- Execution of parse_css failed
+- Execution of <PostCssTransformedAsset as Asset>::content failed
+- Execution of PostCssTransformedAsset::process failed
+- creating new process
+- node process exited before we could connect to it with exit code: 1
+  Process output:
+  
+  Process error output:
+  node:internal/modules/cjs/loader:1372
+    throw err;
+    ^
+  
+  Error: Cannot find module 'D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\.next\postcss.js'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1369:15)
+      at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+      at Module._load (node:internal/modules/cjs/loader:1179:37)
+      at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:152:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+  }
+  
+  Node.js v24.4.1
+    at <unknown> (TurbopackInternalError: Failed to write app endpoint /page) {
+  location: undefined
+}
+[Error: ENOENT: no such file or directory, open 'D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\Zother\\Clg files\\New folder\\https---github.com-AnirudhSingh3067-EACS-main\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'D:\Zother\Clg files\New folder\https---github.com-AnirudhSingh3067-EACS-main\.next\server\app\favicon.ico\[__metadata_id__]\route\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\Zother\\Clg files\\New folder\\https---github.com-AnirudhSingh3067-EACS-main\\.next\\server\\app\\favicon.ico\\[__metadata_id__]\\route\\app-paths-manifest.json'
+}
