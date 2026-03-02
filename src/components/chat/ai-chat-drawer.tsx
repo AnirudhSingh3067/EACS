@@ -25,6 +25,7 @@ import { useUser, useFirestore } from "@/firebase";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { cn } from "@/lib/utils";
+import { getBackendUrl } from "@/lib/api";
 
 type Message = {
   role: "user" | "ai";
@@ -68,15 +69,24 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
     setIsLoading(true);
 
     try {
-      const apiResponse = await fetch("/api/chat", {
+      let token = "";
+      if (user) {
+        token = await user.getIdToken();
+      }
+
+      const backendUrl = getBackendUrl();
+      const apiResponse = await fetch(`${backendUrl}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ message: textToSend }),
       });
 
       if (!apiResponse.ok) {
         const errorData = await apiResponse.json().catch(() => ({}));
-        throw new Error(errorData.reply || "Failed to fetch from chat API");
+        throw new Error(errorData.detail || errorData.reply || "Failed to fetch from chat API");
       }
 
       const data = await apiResponse.json();
