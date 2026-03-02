@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         }
 
         const response = await client.chat.completions.create({
-            model: "grok-2-latest",
+            model: "grok-2",
             messages: [
                 { role: "system", content: "You are a calm and supportive mental health assistant. Never give medical diagnosis. If user expresses self-harm intent, respond with crisis support guidance." },
                 { role: "user", content: message }
