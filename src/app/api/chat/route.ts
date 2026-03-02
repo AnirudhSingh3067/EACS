@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const client = new OpenAI({
     apiKey: process.env.XAI_API_KEY,
-    baseURL: "https://api.x.ai/v1",
+    baseURL: "https://api.groq.com/openai/v1",
 });
 
 export async function POST(req: Request) {
@@ -31,9 +31,9 @@ export async function POST(req: Request) {
         }
 
         const response = await client.chat.completions.create({
-            model: "grok-1",
+            model: "llama-3.1-70b-versatile",
             messages: [
-                { role: "system", content: "You are a calm and supportive mental health assistant. Never give medical diagnosis. If user expresses self-harm intent, respond with crisis support guidance." },
+                { role: "system", content: "You are a calm and supportive mental health assistant." },
                 { role: "user", content: message }
             ],
         });
