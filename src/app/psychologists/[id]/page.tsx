@@ -31,6 +31,7 @@ import { toast } from "@/hooks/use-toast";
 import { useUser, useFirestore } from "@/firebase";
 import { collection, serverTimestamp, Timestamp } from "firebase/firestore";
 import { addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
+import { getBackendUrl } from "@/lib/api";
 import Link from "next/link";
 
 const DEV_PRACTITIONER_UID = "Ci1YkKY538QVfn6X7OjS6wIIktm1";
@@ -77,14 +78,21 @@ export default function ProfilePage() {
     sessionStart.setHours(hours, minutes, 0, 0);
 
     try {
-      addDocumentNonBlocking(collection(db, "sessions"), {
-        patientId: user.uid,
-        practitionerId: DEV_PRACTITIONER_UID,
-        startTime: Timestamp.fromDate(sessionStart),
-        status: "upcoming",
-        meetingLink: null,
-        createdAt: serverTimestamp(),
+      const token = await user.getIdToken();
+      const response = await fetch(`${getBackendUrl()}/api/session/book`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          practitionerId: DEV_PRACTITIONER_UID,
+          startTime: sessionStart.toISOString(),
+          patientName: user.displayName || "A patient"
+        })
       });
+
+      if (!response.ok) throw new Error("Booking failed");
 
       // Dispatch event for PatientHistoryPanel to refresh
       if (typeof window !== "undefined") {

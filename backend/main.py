@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import health, chat
+from routers import health, chat, session
 from firebase import initialize_firebase
 from config import settings
 
@@ -29,6 +29,7 @@ app.add_middleware(
 # Include Routers
 app.include_router(health.router, tags=["Health"])
 app.include_router(chat.router, tags=["Chat"])
+app.include_router(session.router, tags=["Session"])
 
 if __name__ == "__main__":
     import uvicorn

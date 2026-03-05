@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { useUser, useFirestore, useCollection, useMemoFirebase } from "@/firebase";
 import { collection, query, where, orderBy, Timestamp, doc, deleteDoc, writeBatch } from "firebase/firestore";
 import { updateDocumentNonBlocking } from "@/firebase/non-blocking-updates";
+import { getBackendUrl } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -71,12 +72,32 @@ export default function PsychologistDashboard() {
   }, [sessionsData]);
 
   const saveMeetingLink = async (sessionId: string) => {
+    // Determine target session to get patient info
+    const sessionDoc = sessions.find(s => s.id === sessionId);
+    if (!sessionDoc || !user) return;
+
     try {
-      updateDocumentNonBlocking(doc(db, "sessions", sessionId), {
-        meetingLink: meetingLinks[sessionId] || null
+      const token = await user.getIdToken();
+      const response = await fetch(`${getBackendUrl()}/api/session/add-meet-link`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          sessionId: sessionId,
+          meetingLink: meetingLinks[sessionId] || "",
+          patientId: sessionDoc.patientId,
+          professionalName: user.displayName || "Your Professional"
+        })
       });
+
+      if (!response.ok) throw new Error("Failed to save link and notify");
+
+      toast({ title: "Success", description: "Meeting link saved and patient notified." });
     } catch (err) {
       console.error(err);
+      toast({ title: "Error", description: "Failed to save meeting link", variant: "destructive" });
     }
   };
 

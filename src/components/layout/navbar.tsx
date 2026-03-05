@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit, Menu, UserCircle, LogOut, Settings, LayoutDashboard, Bell, BookOpen, Sun, Moon, Users, Brain } from "lucide-react";
+import { BrainCircuit, Menu, UserCircle, LogOut, Settings, LayoutDashboard, Bell, BookOpen, Sun, Moon, Users, Brain, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +17,8 @@ import { useUser, useAuth, useCollection, useFirestore } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useMemoFirebase } from "@/firebase/provider";
-import { query, collection, where, orderBy, limit } from "firebase/firestore";
+import { query, collection, where, orderBy, limit, doc, deleteDoc } from "firebase/firestore";
+import { updateDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 
 export function Navbar() {
   const { user } = useUser();
@@ -57,7 +58,7 @@ export function Navbar() {
     return query(
       collection(db, "notifications"),
       where("userId", "==", user.uid),
-      limit(10)
+      limit(20)
     );
   }, [db, user?.uid]);
 
@@ -68,9 +69,13 @@ export function Navbar() {
   };
 
   const formatTimestamp = (timestamp: any) => {
-    if (!isMounted || !timestamp?.seconds) return 'Just now';
+    if (!isMounted || !timestamp) return 'Just now';
+    // Handle both new backend serverTimestamp dict shape or native Timestamp
+    const seconds = timestamp.seconds ?? (timestamp._seconds || (new Date(timestamp).getTime() / 1000));
+    if (!seconds) return 'Just now';
+
     try {
-      return new Date(timestamp.seconds * 1000).toLocaleString('en-US', {
+      return new Date(seconds * 1000).toLocaleString('en-US', {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
@@ -78,6 +83,33 @@ export function Navbar() {
       });
     } catch (e) {
       return 'Recently';
+    }
+  };
+
+  const markAsRead = (id: string, isRead: boolean) => {
+    if (isRead || !db) return;
+    updateDocumentNonBlocking(doc(db, "notifications", id), { isRead: true });
+  };
+
+  const clearAllNotifications = async () => {
+    if (!notifications || notifications.length === 0 || !db) return;
+    if (confirm("Are you sure you want to clear all notifications?")) {
+      try {
+        await Promise.all(
+          notifications.map((n) => deleteDoc(doc(db, "notifications", n.id)))
+        );
+      } catch (e) {
+        console.error("Error clearing notifications:", e);
+      }
+    }
+  };
+
+  const getNotificationStyles = (type: string) => {
+    switch (type) {
+      case 'booking': return 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20';
+      case 'meeting_link': return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+      case 'reminder': return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
+      default: return 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20';
     }
   };
 
@@ -141,22 +173,58 @@ export function Navbar() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-full">
                       <Bell className="h-5 w-5 text-muted-foreground" />
-                      {notifications && notifications.some(n => !n.readStatus) && (
+                      {notifications && notifications.some(n => !n.isRead) && (
                         <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border-2 border-background"></span>
                       )}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-80 p-0 rounded-2xl shadow-2xl border-border overflow-hidden bg-card text-card-foreground">
-                    <div className="p-4 bg-muted border-b">
-                      <h4 className="font-bold text-sm">Notifications</h4>
+                    <div className="p-4 bg-muted border-b flex justify-between items-center">
+                      <h4 className="font-semibold text-sm">Notifications</h4>
+                      {notifications && notifications.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearAllNotifications}
+                          className="text-xs h-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="h-3 w-3 mr-2" /> Clear All
+                        </Button>
+                      )}
                     </div>
                     <div className="max-h-96 overflow-auto">
-                      {notifications?.map(n => (
-                        <div key={n.id} className={`p-4 border-b last:border-0 text-xs ${!n.readStatus ? 'bg-primary/5' : ''}`}>
-                          <p className="leading-relaxed">{n.message}</p>
-                          <p className="text-[10px] text-muted-foreground mt-2">
-                            {formatTimestamp(n.timestamp)}
-                          </p>
+                      {notifications?.sort((a, b) => {
+                        const timeA = a.createdAt?.seconds ?? (a.createdAt?._seconds || (new Date(a.createdAt || 0).getTime() / 1000));
+                        const timeB = b.createdAt?.seconds ?? (b.createdAt?._seconds || (new Date(b.createdAt || 0).getTime() / 1000));
+                        return timeB - timeA;
+                      }).slice(0, 10).map(n => (
+                        <div
+                          key={n.id}
+                          onClick={() => markAsRead(n.id, n.isRead)}
+                          className={`p-4 border-b last:border-0 cursor-pointer transition-all duration-300 ${!n.isRead ? 'bg-primary/5 hover:bg-primary/10' : 'hover:bg-muted/40'}`}
+                        >
+                          <div className="flex items-start justify-between gap-3 mb-1">
+                            <h5 className="font-semibold text-sm text-foreground">{n.title || "Notification"}</h5>
+                            {n.type && (
+                              <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm border ${getNotificationStyles(n.type)}`}>
+                                {n.type.replace('_', ' ')}
+                              </span>
+                            )}
+                          </div>
+
+                          <p className="text-sm text-muted-foreground leading-relaxed mt-1">{n.message}</p>
+
+                          <div className="flex items-center justify-between mt-3">
+                            <p className="text-[10px] text-muted-foreground/50 font-normal">
+                              {formatTimestamp(n.createdAt)}
+                            </p>
+
+                            {n.type === 'booking' && (
+                              <Button size="sm" variant="outline" className="h-6 text-[10px] px-3" asChild>
+                                <Link href="/dashboard/psychologist">View Booking</Link>
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       ))}
                       {!notifications?.length && <p className="p-8 text-center text-xs text-muted-foreground">No notifications yet</p>}
