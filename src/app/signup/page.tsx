@@ -67,8 +67,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <Card className="w-full max-w-md shadow-xl border-0">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-md shadow-xl border-border">
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center mb-2">
             <BrainCircuit className="h-10 w-10 text-primary" />

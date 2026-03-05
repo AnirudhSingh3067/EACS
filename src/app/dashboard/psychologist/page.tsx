@@ -139,7 +139,7 @@ export default function PsychologistDashboard() {
         <div className="flex justify-between items-end mb-8">
           <div>
             <h1 className="text-3xl font-headline font-bold text-foreground">Practitioner Panel</h1>
-            <p className="text-muted-foreground">Welcome back, Dr. Jenkins.</p>
+            <p className="text-muted-foreground">Welcome back, Dr. Manoj Sharma.</p>
           </div>
           <Button variant="outline" className="gap-2 bg-card border-border">
             <Settings className="h-4 w-4" /> Manage Availability

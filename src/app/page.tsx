@@ -51,6 +51,7 @@ export default function Home() {
                 height={800}
                 className="object-cover w-full aspect-square"
                 data-ai-hint="therapy session"
+                priority={true}
               />
             </div>
             <div className="absolute -bottom-8 -left-8 bg-card p-6 rounded-2xl shadow-xl z-20 hidden md:block border border-border max-w-[240px]">

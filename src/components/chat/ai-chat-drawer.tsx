@@ -128,7 +128,7 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="right" className="sm:max-w-[500px] flex flex-col p-0 border-l border-border shadow-2xl rounded-l-[3rem] overflow-hidden bg-background">
+        <SheetContent side="right" className="sm:max-w-[600px] flex flex-col p-0 border-l border-border shadow-2xl rounded-l-[3rem] overflow-hidden bg-background">
           <SheetHeader className="p-10 border-b border-border bg-card shrink-0">
             <div className="flex items-center gap-5">
               <div className="h-14 w-14 bg-primary/10 rounded-[1.5rem] flex items-center justify-center text-primary shadow-inner">
@@ -144,7 +144,7 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
           </SheetHeader>
 
           <ScrollArea className="flex-1 px-8 py-10 bg-muted/20" ref={scrollRef}>
-            <div className="space-y-8 pb-10">
+            <div className="space-y-12 pb-10">
               {messages.map((m, i) => (
                 <div key={i} className={cn("flex gap-4 animate-section-flow", m.role === "user" ? "flex-row-reverse" : "")}>
                   <div className={cn(
@@ -154,7 +154,7 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
                     {m.role === "user" ? <User className="h-5 w-5 text-muted-foreground" /> : <Brain className="h-5 w-5" />}
                   </div>
                   <div className={cn(
-                    "p-6 text-sm leading-relaxed shadow-sm transition-all",
+                    "px-8 py-6 text-sm leading-relaxed shadow-sm transition-all",
                     m.role === "user"
                       ? "bg-card rounded-[2rem] rounded-tr-none border border-border text-foreground"
                       : "bg-primary/5 border border-primary/10 rounded-[2rem] rounded-tl-none text-foreground"
