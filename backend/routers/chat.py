@@ -6,7 +6,7 @@ from config import settings
 
 router = APIRouter()
 client = AsyncGroq(
-    api_key=settings.XAI_API_KEY,
+    api_key=settings.GROQ_API_KEY,
 )
 
 class ChatRequest(BaseModel):
