@@ -16,7 +16,7 @@ class ChatResponse(BaseModel):
     reply: str
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(request: ChatRequest, token: dict = Depends(verify_firebase_token)):
+async def chat_endpoint(request: ChatRequest):
     message = request.message
     
     if not message or not isinstance(message, str):
