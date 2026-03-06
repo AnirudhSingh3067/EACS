@@ -5,3 +5,4 @@ firebase-admin>=6.5.0
 python-dotenv>=1.0.1
 openai>=1.34.0
 groq
+pydantic-settings
