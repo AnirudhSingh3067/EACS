@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from groq import AsyncGroq
 from firebase import verify_firebase_token
 from config import settings
+import traceback
 
 router = APIRouter()
 client = AsyncGroq(
@@ -48,5 +49,8 @@ async def chat_endpoint(request: ChatRequest):
         return ChatResponse(reply=reply_content)
         
     except Exception as e:
-        print("Chat API Error:", e)
+        print("========== GROQ ERROR ==========")
+        traceback.print_exc()
+        print("ERROR MESSAGE:", str(e))
+        print("================================")
         raise HTTPException(status_code=500, detail=f"Backend Error: {str(e)}")
