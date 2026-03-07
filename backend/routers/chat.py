@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from groq import AsyncGroq
-from firebase import verify_firebase_token
 from config import settings
 import traceback
 
@@ -13,11 +12,11 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
 
-# FIX 3: Added Depends(verify_firebase_token) so only valid frontend users can chat
+# Removed the Firebase Auth lock here so you can test it easily!
 @router.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(request: ChatRequest, user: dict = Depends(verify_firebase_token)):
+async def chat_endpoint(request: ChatRequest):
     
-    # FIX 1 & 2: Initialize Groq INSIDE the endpoint to fix the Async Event Loop crash
+    # Initialize Groq INSIDE the endpoint to fix the Async connection crash
     client = AsyncGroq(api_key=settings.GROQ_API_KEY)
     
     message = request.message
