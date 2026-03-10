@@ -326,13 +326,5 @@ If you have questions or suggestions:
 * Open a GitHub issue
 * Contact the project maintainer
 
----
-
-🧠 **MindBridge — Connecting people with AI-powered emotional support.**
 
 
-* tech stack icons
-* screenshots
-* animated header
-
-which will make your repo **look extremely professional.**
