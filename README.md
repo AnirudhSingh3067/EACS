@@ -36,23 +36,21 @@ The platform combines a **modern web interface with a secure backend and an AI c
 ## Frontend
 
 * **Next.js** – React framework for building the user interface
-* **TypeScript** – Type-safe development for scalable applications
-* **Tailwind CSS** – Utility-first CSS framework for responsive design
+* **TypeScript** – Type-safe development for scalable code
+* **Tailwind CSS** – Utility-first styling for responsive design
 * **Radix UI** – Accessible and customizable UI components
 * **React Hook Form** – Efficient form handling and validation
 
 ---
 
-## Backend / AI Integration
+## Backend
 
-* **Next.js API Routes** – Backend logic and server-side endpoints
-* **Python FastAPI** – AI processing backend service
-* **Groq API** – AI response generation for mental health conversations
-* **Firebase Authentication** – Secure user authentication system
-* **HTTPX** – Asynchronous API requests between services
+* **Python FastAPI** – High-performance backend framework for handling API requests
+* **Firebase Authentication** – Secure user authentication and identity management
+* **Pydantic** – Data validation and settings management
+* **HTTPX** – Async HTTP client for external API communication
 
 ---
-
 
 ## AI Engine
 
