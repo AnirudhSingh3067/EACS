@@ -46,3 +46,22 @@ firestore-debug.log
 
 # secrets
 backend/serviceAccountKey.json
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# logs
+*.log
+*.txt
+
+# OS files
+.DS_Store
+Thumbs.db

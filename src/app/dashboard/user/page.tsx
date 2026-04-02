@@ -326,11 +326,11 @@ export default function UserDashboard() {
             {/* Analytics and Insights */}
             <div className="lg:col-span-2 space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Weekly Reflection Upgrade */}
+                {/* Your Weekly Mood Upgrade */}
                 <Card className="friendly-card col-span-1 md:col-span-2">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg font-bold font-headline flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5 text-primary" /> Weekly Reflection
+                      <TrendingUp className="h-5 w-5 text-primary" /> Your Weekly Mood
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -389,7 +389,7 @@ export default function UserDashboard() {
                         <div className="p-6 bg-primary/5 dark:bg-primary/10 rounded-3xl border border-primary/10 h-full flex flex-col">
                           <div className="flex items-center gap-2 mb-4">
                             <Brain className="h-5 w-5 text-primary" />
-                            <h4 className="font-bold text-sm">AI Soul Insight</h4>
+                            <h4 className="font-bold text-sm">MindBridge Insight</h4>
                           </div>
                           <p className="text-sm text-foreground/80 leading-relaxed italic mb-6">
                             "It looks like you've been finding more moments of calm recently. Your resilience is showing through in how you handle stress. Keep prioritizing these small moments of peace, as they are building a strong foundation for your long-term wellness."
@@ -412,7 +412,7 @@ export default function UserDashboard() {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="font-headline text-xl font-bold">Your Healing Path</CardTitle>
                     <Button onClick={() => setIsChatOpen(true)} className="cta-glow">
-                      <Plus className="mr-2 h-4 w-4" /> Start AI Chat
+                      <Sparkles className="mr-2 h-4 w-4" /> Begin Chat
                     </Button>
                   </CardHeader>
                   <CardContent>

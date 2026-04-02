@@ -25,7 +25,6 @@ import { useUser, useFirestore } from "@/firebase";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 import { cn } from "@/lib/utils";
-import { getBackendUrl } from "@/lib/api";
 
 type Message = {
   role: "user" | "ai";
@@ -70,20 +69,11 @@ export function AIChatDrawer({ open, onOpenChange }: { open: boolean, onOpenChan
 
     try {
 
-      const backendUrl = getBackendUrl();
-
-      let headers: any = {
-        "Content-Type": "application/json",
-      };
-
-      if (user) {
-        const token = await user.getIdToken();
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
-      const apiResponse = await fetch(`${backendUrl}/chat`, {
+      const apiResponse = await fetch(`/api/chat`, {
         method: "POST",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ message: textToSend }),
       });
 

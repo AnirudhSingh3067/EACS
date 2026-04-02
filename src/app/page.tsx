@@ -38,7 +38,7 @@ export default function Home() {
                 <Link href="/psychologists">Find Your Specialist</Link>
               </Button>
               <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-border" asChild>
-                <Link href="/dashboard/user">Explore AI Support</Link>
+                <Link href="/dashboard/user">Start Conversation</Link>
               </Button>
             </div>
           </ScrollReveal>
