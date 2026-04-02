@@ -107,9 +107,11 @@ export default function Home() {
               </ScrollRevealItem>
             </ScrollReveal>
           </ScrollReveal>
-          <ScrollReveal delay={0.2} className="flex-1 relative">
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-              <Image src="https://images.unsplash.com/photo-1666362755385-1856fca1a330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxQc3ljaG9sb2d5JTIwfGVufDB8fHx8MTc3MjI3MDUwNXww&ixlib=rb-4.1.0&q=80&w=1080" alt="Mindfulness and peace" fill className="object-cover" data-ai-hint="serene nature" />
+          <ScrollReveal delay={0.2} className="flex-1 relative flex justify-center md:justify-end w-full">
+            <div className="w-full max-w-[90%] md:max-w-md lg:max-w-lg mx-auto md:ml-auto md:mr-0 p-2 bg-secondary/20 dark:bg-white/5 backdrop-blur-sm border border-border dark:border-white/10 shadow-xl rounded-[2.5rem]">
+              <div className="w-full aspect-[4/5] rounded-[2.2rem] overflow-hidden relative shadow-inner">
+                <Image src="https://images.unsplash.com/photo-1666362755385-1856fca1a330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxQc3ljaG9sb2d5JTIwfGVufDB8fHx8MTc3MjI3MDUwNXww&ixlib=rb-4.1.0&q=80&w=1080" alt="Mindfulness and peace" fill className="object-cover" data-ai-hint="serene nature" />
+              </div>
             </div>
           </ScrollReveal>
         </div>
